@@ -1,20 +1,24 @@
 "use client";
 
-import { Github, Menu, X } from "lucide-react";
+import { ArrowRight, Github, LayoutDashboard, Menu, ReceiptText, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Logo } from "@/components/layout/logo";
 import { Button } from "@/components/ui/button";
+import { useCurrentUser } from "@/hooks/use-auth";
 import { downloadHref } from "@/lib/downloads";
 
 const links = [
   { href: "#features", label: "Features" },
   { href: "#security", label: "Security" },
   { href: "#get-started", label: "Get started" },
+  { href: "/docs", label: "Documentation" },
 ];
 
 export function MarketingNav() {
   const [open, setOpen] = useState(false);
+  const { data: authData } = useCurrentUser();
+  const user = authData?.user;
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
@@ -46,12 +50,28 @@ export function MarketingNav() {
             <Github className="size-4" />
             GitHub
           </a>
-          <Button variant="ghost" size="default" render={<Link href="/login" />}>
-            Sign in
-          </Button>
-          <Button variant="default" size="default" render={<Link href="/signup" />}>
-            Get started free
-          </Button>
+          {user ? (
+            <>
+              <Button variant="ghost" size="default" render={<Link href="/billing" />}>
+                <ReceiptText className="mr-1.5 size-4" />
+                Billing
+              </Button>
+              <Button variant="default" size="default" render={<Link href="/dashboard" />}>
+                <LayoutDashboard className="mr-1.5 size-4" />
+                Dashboard
+                <ArrowRight className="ml-1 size-3.5" />
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="ghost" size="default" render={<Link href="/login" />}>
+                Sign in
+              </Button>
+              <Button variant="default" size="default" render={<Link href="/signup" />}>
+                Get started free
+              </Button>
+            </>
+          )}
         </div>
 
         <button
@@ -79,12 +99,27 @@ export function MarketingNav() {
               </a>
             ))}
             <div className="mt-2 flex flex-col gap-2">
-              <Button variant="outline" render={<Link href="/login" />}>
-                Sign in
-              </Button>
-              <Button variant="default" render={<Link href="/signup" />}>
-                Get started free
-              </Button>
+              {user ? (
+                <>
+                  <Button variant="outline" render={<Link href="/billing" />}>
+                    <ReceiptText className="mr-1.5 size-4" />
+                    Billing
+                  </Button>
+                  <Button variant="default" render={<Link href="/dashboard" />}>
+                    <LayoutDashboard className="mr-1.5 size-4" />
+                    Go to Dashboard
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="outline" render={<Link href="/login" />}>
+                    Sign in
+                  </Button>
+                  <Button variant="default" render={<Link href="/signup" />}>
+                    Get started free
+                  </Button>
+                </>
+              )}
             </div>
           </nav>
         </div>

@@ -1,15 +1,19 @@
 "use client";
 
-import { ArrowRight, Github } from "lucide-react";
+import { ArrowRight, Github, LayoutDashboard } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useCurrentUser } from "@/hooks/use-auth";
 import { downloadHref } from "@/lib/downloads";
 import { PosMockup } from "@/components/marketing/pos-mockup";
 
 const words = ["Restaurant", "software", "you", "actually", "own."];
 
 export function Hero() {
+  const { data: authData } = useCurrentUser();
+  const user = authData?.user;
+
   return (
     <section className="relative overflow-hidden px-4 pt-20 pb-24 sm:px-6 sm:pt-28">
       {/* Ambient gradient glow — transform/opacity only, no layout cost */}
@@ -49,7 +53,7 @@ export function Hero() {
           transition={{ duration: 0.4, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
           className="mt-6 max-w-2xl text-balance text-lg text-muted-foreground sm:text-xl"
         >
-          POS, kitchen display, tables, reservations, inventory, and CRM — one
+          POS, kitchen display, tables, reservations, inventory, and billing — one
           self-hosted stack that runs on your own LAN. No subscription, no
           forced cloud dependency, no vendor lock-in. Your orders, your
           customers&rsquo; data, your server.
@@ -61,10 +65,18 @@ export function Hero() {
           transition={{ duration: 0.4, delay: 0.48, ease: [0.22, 1, 0.36, 1] }}
           className="mt-9 flex flex-col items-center gap-3 sm:flex-row"
         >
-          <Button size="lg" className="h-11 px-6 text-[15px]" render={<Link href="/signup" />}>
-            Get started free
-            <ArrowRight className="size-4" data-icon="inline-end" />
-          </Button>
+          {user ? (
+            <Button size="lg" className="h-11 px-6 text-[15px]" render={<Link href="/dashboard" />}>
+              <LayoutDashboard className="mr-1.5 size-4" />
+              Go to Dashboard
+              <ArrowRight className="ml-1 size-4" data-icon="inline-end" />
+            </Button>
+          ) : (
+            <Button size="lg" className="h-11 px-6 text-[15px]" render={<Link href="/signup" />}>
+              Get started free
+              <ArrowRight className="size-4" data-icon="inline-end" />
+            </Button>
+          )}
           <Button
             variant="outline"
             size="lg"

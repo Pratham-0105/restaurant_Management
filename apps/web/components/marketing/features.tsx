@@ -5,6 +5,7 @@ import {
   Package,
   Plug,
   QrCode,
+  ReceiptText,
   ShieldCheck,
   UtensilsCrossed,
   WifiOff,
@@ -14,9 +15,15 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/reveal";
 const features = [
   {
     icon: UtensilsCrossed,
-    title: "Dine-in POS & billing",
+    title: "Dine-in POS & ordering",
     description:
-      "Modifiers, combos, split & merge bills, tips, gift cards, multi-payment checkout, and tax-inclusive GST pricing done right.",
+      "Modifiers, combos, table ordering, takeaway, delivery tracking, tips, gift cards, and tax-inclusive GST pricing.",
+  },
+  {
+    icon: ReceiptText,
+    title: "Dedicated Billing & Invoicing",
+    description:
+      "One-click customer receipts, ESC/POS thermal printing, dynamic UPI QR code generation, cash change calculator, and provisional dining bills.",
   },
   {
     icon: ChefHat,

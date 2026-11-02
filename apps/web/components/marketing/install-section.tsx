@@ -8,7 +8,7 @@ import { downloadHref, totalDownloads } from "@/lib/downloads";
 import { useDownloadStats } from "@/hooks/use-download-stats";
 
 const INSTALL_COMMAND =
-  "git clone https://github.com/swamiverse/restaurant-pos.git && cd restaurant-pos && ./install.sh";
+  "git clone https://github.com/Pratham-0105/restaurant_Management.git && cd restaurant_Management && ./install.sh";
 
 const channels = [
   {
