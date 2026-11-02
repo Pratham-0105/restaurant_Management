@@ -1,6 +1,7 @@
 {
   "nav.dashboard": "Tableau de bord",
   "nav.pos": "Point de vente",
+  "nav.billing": "Facturation",
   "nav.tables": "Tables",
   "nav.orders": "Commandes",
   "nav.reservations": "Réservations",

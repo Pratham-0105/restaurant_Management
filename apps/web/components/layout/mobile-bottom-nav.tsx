@@ -13,7 +13,7 @@ import { NAV_ITEMS } from "./nav-items";
 // The screens staff jump between all shift long, in priority order. Whatever
 // the signed-in role can't open is skipped, so a kitchen-only login still gets
 // a full bar. Everything else lives behind "More" (the existing drawer).
-const PRIMARY_HREFS = ["/pos", "/orders", "/tables", "/kds", "/dashboard"];
+const PRIMARY_HREFS = ["/pos", "/billing", "/orders", "/tables", "/kds", "/dashboard"];
 const PRIMARY_COUNT = 4;
 
 // Thumb-reach navigation for phones. Hidden from lg up, where the sidebar takes over.

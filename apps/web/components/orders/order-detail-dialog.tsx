@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, MessageCircle, Pencil, Phone, X } from "lucide-react";
+import { Check, MessageCircle, Pencil, Phone, Printer, X } from "lucide-react";
 import { useState } from "react";
 import { StatusNote, useNoteToast } from "@/components/ui/status-note";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +14,7 @@ import { ReasonDialog } from "@/components/orders/reason-dialog";
 import { hasPermission, useCurrentUser } from "@/hooks/use-auth";
 import { useAcceptOrder, useOrder, useRejectOrder } from "@/hooks/use-orders";
 import { formatCurrency } from "@/lib/format";
+import { openReceiptPrint } from "@/lib/print";
 import { cn } from "@/lib/utils";
 
 const CANCEL_SOURCE_LABEL = {
@@ -197,6 +198,16 @@ export function OrderDetailDialog({
                 This bill is paid. To correct it, issue a refund from the Dashboard — paid bills are never edited in place.
               </p>
             )}
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                className="flex-1"
+                onClick={() => branchId && openReceiptPrint(order.id, branchId)}
+              >
+                <Printer className="mr-1.5 h-4 w-4" /> Print bill
+              </Button>
+            </div>
+
             {canCancel && (
               <div className="flex gap-2">
                 {canEditRole && (
