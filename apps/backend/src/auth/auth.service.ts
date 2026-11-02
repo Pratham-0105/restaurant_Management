@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  OnModuleInit,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -18,12 +19,46 @@ import { PrismaService } from '../prisma/prisma.service';
 import { TwoFactorService } from './two-factor.service';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnModuleInit {
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwt: JwtService,
     private readonly twoFactor: TwoFactorService,
   ) {}
+
+  async onModuleInit() {
+    try {
+      const exists = await this.hasAnyRestaurant();
+      if (!exists) {
+        console.log(
+          'Database is empty. Initializing default Swamiverse restaurant and owner...',
+        );
+        await this.register({
+          restaurantName: 'Swamiverse Restaurant',
+          branchName: 'Main Branch',
+          ownerName: 'Prathmesh Ahire',
+          email: 'pratham010504@gmail.com',
+          password: 'Password123!',
+        });
+        const user = await this.prisma.user.findFirst({
+          where: { email: 'pratham010504@gmail.com' },
+        });
+        if (user) {
+          const passwordHash = await bcrypt.hash('12345678', 12);
+          const pinHash = await bcrypt.hash('1234', 12);
+          await this.prisma.user.update({
+            where: { id: user.id },
+            data: { passwordHash, pinHash },
+          });
+        }
+        console.log(
+          'Default owner initialized: pratham010504@gmail.com / 12345678',
+        );
+      }
+    } catch (err) {
+      console.warn('Auto-init restaurant notice:', err);
+    }
+  }
 
   private toSessionUser(user: {
     id: string;

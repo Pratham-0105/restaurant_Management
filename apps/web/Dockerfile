@@ -25,7 +25,7 @@ RUN pnpm install --frozen-lockfile
 # and ARCHITECTURE.md's "reused from swamiverse-pos" section for why a runtime
 # env silently falls back to the default instead).
 FROM deps AS builder
-ARG BACKEND_URL=http://backend:4000
+ARG BACKEND_URL=https://swamiverse-api.onrender.com
 ENV BACKEND_URL=${BACKEND_URL}
 COPY packages/types packages/types
 COPY apps/web apps/web
