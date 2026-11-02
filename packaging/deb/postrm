@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+systemctl daemon-reload >/dev/null 2>&1 || true
+if [ "$1" = purge ]; then
+  echo "swamiverse: your data stays in Docker volumes (swamiverse_pg_data, swamiverse_uploads_data, swamiverse_state) and your settings and generated passwords in /etc/swamiverse/swamiverse.env, so a later reinstall picks up where you left off. To delete everything for good: sudo docker compose --project-name swamiverse down -v ; sudo rm -rf /etc/swamiverse" >&2
+fi
+exit 0

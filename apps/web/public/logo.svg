@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Background rounded square -->
+  <rect width="100" height="100" rx="20" ry="20" fill="#9f1239"/>
+  <!-- SVI text -->
+  <text
+    x="50"
+    y="67"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="38"
+    font-weight="700"
+    fill="white"
+    text-anchor="middle"
+    letter-spacing="-1"
+  >SVI</text>
+</svg>
+
