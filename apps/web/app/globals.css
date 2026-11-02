@@ -166,6 +166,7 @@
 .kiosk-root input {
   min-height: max(48px, 3rem);
 }
+
 .kiosk-root button {
   min-width: max(48px, 3rem);
 }
@@ -174,9 +175,11 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
@@ -190,6 +193,7 @@
    not just a narrow viewport) so mouse-driven desktop use keeps the denser
    layout the design system was built around. */
 @media (pointer: coarse) {
+
   button,
   [role="button"],
   a[href],
@@ -217,9 +221,11 @@
     transform: rotate(var(--angle)) translateY(0) scale(0);
     opacity: 1;
   }
+
   60% {
     opacity: 1;
   }
+
   100% {
     transform: rotate(var(--angle)) translateY(-48px) scale(1);
     opacity: 0;
@@ -240,6 +246,7 @@
   --shadow-card-hover: 0 2px 4px rgb(17 24 39 / 0.05), 0 16px 32px -14px rgb(76 14 34 / 0.18);
   --gradient-primary: linear-gradient(135deg, #B3163F 0%, #9F1239 45%, #7A0E2C 100%);
 }
+
 .dark {
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 10px 28px -14px rgb(0 0 0 / 0.6);
   --shadow-card-hover: 0 2px 4px rgb(0 0 0 / 0.45), 0 18px 36px -14px rgb(251 113 133 / 0.18);
@@ -252,18 +259,24 @@
     text-rendering: optimizeLegibility;
     font-feature-settings: "cv11", "ss01";
   }
+
   body {
     background-image:
       radial-gradient(60rem 28rem at 100% -10%, rgb(159 18 57 / 0.045), transparent 60%),
       radial-gradient(48rem 24rem at -10% 110%, rgb(245 158 11 / 0.035), transparent 60%);
     background-attachment: fixed;
   }
-  h1, h2, h3 {
+
+  h1,
+  h2,
+  h3 {
     letter-spacing: -0.015em;
   }
+
   ::selection {
     background: rgb(159 18 57 / 0.18);
   }
+
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 2px;
@@ -271,6 +284,7 @@
 }
 
 @layer components {
+
   /* The tabs bar is a fixed h-8, but touch targets inside it are forced to
      44px above — let the bar grow with them, and scroll sideways instead of
      overflowing when there are more tabs than the screen is wide. */
@@ -280,51 +294,63 @@
       min-height: 44px;
     }
   }
+
   @media (max-width: 1023px) {
     [data-slot="tabs-list"] {
       max-width: 100%;
       overflow-x: auto;
       scrollbar-width: none;
     }
+
     [data-slot="tabs-list"]::-webkit-scrollbar {
       display: none;
     }
+
     [data-slot="tabs-trigger"] {
       flex: 0 0 auto;
       padding-inline: 0.875rem;
     }
   }
+
   html {
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior-y: none;
   }
+
   [data-slot="card"] {
     box-shadow: var(--shadow-card);
     transition: box-shadow 180ms ease, transform 180ms ease;
   }
+
   a[data-slot="card"]:hover,
   button[data-slot="card"]:hover {
     box-shadow: var(--shadow-card-hover);
+
     transform: translateY(-1px);
   }
+
   [data-slot="button"][data-variant="default"],
   button[data-slot="button"].bg-primary {
     background-image: var(--gradient-primary);
     box-shadow: 0 1px 0 rgb(255 255 255 / 0.18) inset, 0 6px 14px -6px rgb(159 18 57 / 0.55);
     transition: filter 150ms ease, transform 150ms ease, box-shadow 150ms ease;
   }
+
   [data-slot="button"][data-variant="default"]:hover:not(:disabled) {
     filter: brightness(1.06);
   }
+
   [data-slot="button"][data-variant="default"]:active:not(:disabled) {
     transform: translateY(1px);
   }
+
   table {
     font-variant-numeric: tabular-nums;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   [data-slot="card"],
   [data-slot="button"] {
     transition: none !important;
