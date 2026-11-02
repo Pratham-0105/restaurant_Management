@@ -79,15 +79,15 @@ function resolveJwtSecret(): string {
     writeFileSync(JWT_SECRET_STATE_FILE, generated, { mode: 0o600 });
     console.warn(
       `JWT_SECRET was not set (or was a known placeholder) — generated a random one and saved it to ${JWT_SECRET_STATE_FILE}. ` +
-        'It will be reused on every restart, so existing sessions stay valid. Set JWT_SECRET explicitly instead if you manage this deployment by hand.',
+      'It will be reused on every restart, so existing sessions stay valid. Set JWT_SECRET explicitly instead if you manage this deployment by hand.',
     );
     return generated;
   } catch (err) {
     console.error(
       `Refusing to start: JWT_SECRET is missing, a known placeholder value, or shorter than ${MIN_JWT_SECRET_LENGTH} characters, ` +
-        `and a random one could not be generated/persisted at ${JWT_SECRET_STATE_FILE}: ${err instanceof Error ? err.message : String(err)}. ` +
-        'Set a real, unique, random JWT_SECRET (e.g. `openssl rand -hex 32`) before starting the backend — ' +
-        'this protects every session this server will ever issue.',
+      `and a random one could not be generated/persisted at ${JWT_SECRET_STATE_FILE}: ${err instanceof Error ? err.message : String(err)}. ` +
+      'Set a real, unique, random JWT_SECRET (e.g. `openssl rand -hex 32`) before starting the backend — ' +
+      'this protects every session this server will ever issue.',
     );
     process.exit(1);
   }
@@ -126,10 +126,14 @@ async function bootstrap() {
   // and a website's backend calls the Integration API server-to-server, so the
   // only origin that needs CORS is the dashboard itself. Several can be listed,
   // comma-separated; never "*" (credentials are on).
-  const corsOrigins = (process.env.CORS_ORIGIN ?? 'http://localhost:1995')
-    .split(',')
-    .map((o) => o.trim())
-    .filter((o) => o && o !== '*');
+  const rawCors = process.env.CORS_ORIGIN;
+  const corsOrigins =
+    rawCors && rawCors !== '*'
+      ? rawCors
+          .split(',')
+          .map((o) => o.trim())
+          .filter((o) => o && o !== '*')
+      : true;
   app.enableCors({
     origin: corsOrigins,
     credentials: true,

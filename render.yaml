@@ -3,15 +3,17 @@ databases:
     databaseName: swamiverse_restaurant
     user: swamiverse
     plan: free
+    region: oregon
 
 services:
   # 1. Swamiverse API (NestJS + Socket.IO + Prisma)
   - type: web
     name: swamiverse-api
     runtime: docker
-    dockerfilePath: apps/backend/Dockerfile
+    dockerfilePath: ./apps/backend/Dockerfile
     dockerContext: .
     plan: free
+    region: oregon
     healthCheckPath: /api/v1/auth/setup-status
     envVars:
       - key: DATABASE_URL
@@ -24,11 +26,6 @@ services:
         value: 12h
       - key: PORT
         value: 4000
-      - key: CORS_ORIGIN
-        fromService:
-          type: web
-          name: swamiverse-web
-          property: host
       - key: COOKIE_SECURE
         value: "true"
 
@@ -36,13 +33,13 @@ services:
   - type: web
     name: swamiverse-web
     runtime: docker
-    dockerfilePath: apps/web/Dockerfile
+    dockerfilePath: ./apps/web/Dockerfile
     dockerContext: .
     plan: free
-    dockerBuildArgs:
+    region: oregon
+    envVars:
       - key: BACKEND_URL
         value: http://swamiverse-api:4000
-    envVars:
       - key: PORT
         value: 3000
       - key: NODE_ENV
