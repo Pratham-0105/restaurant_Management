@@ -43,5 +43,7 @@ services:
         value: http://swamiverse-api:4000
       - key: PORT
         value: 3000
+      - key: HOSTNAME
+        value: "0.0.0.0"
       - key: NODE_ENV
         value: production

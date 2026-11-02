@@ -36,6 +36,8 @@ RUN pnpm --filter web build
 FROM node:22-alpine AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
 # The standalone server (apps/web/server.js) resolves `public/` and
 # `.next/static` relative to ITS OWN traced monorepo path, i.e.
