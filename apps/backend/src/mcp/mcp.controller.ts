@@ -27,7 +27,7 @@ import { McpToolsBuilder } from './mcp-tools.builder';
 @UseGuards(StaffApiKeyGuard)
 @Controller('v1/mcp')
 export class McpController {
-  constructor(private readonly toolsBuilder: McpToolsBuilder) {}
+  constructor(private readonly toolsBuilder: McpToolsBuilder) { }
 
   @Post()
   async handlePost(@Req() req: Request, @Res() res: Response) {
