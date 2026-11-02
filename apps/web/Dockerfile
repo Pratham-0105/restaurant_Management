@@ -12,7 +12,7 @@ WORKDIR /repo
 # builds every workspace member's native addons. Same toolchain apps/backend/
 # Dockerfile needs, for the same reason (see that file's comment).
 FROM base AS deps
-RUN apk add --no-cache python3 make g++ linux-headers eudev-dev libusb-dev pkgconfig
+RUN apk update && apk add --no-cache python3 make g++ linux-headers eudev-dev libusb-dev pkgconfig
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY apps/backend/package.json apps/backend/package.json
 COPY apps/web/package.json apps/web/package.json

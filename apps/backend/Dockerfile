@@ -17,7 +17,7 @@ WORKDIR /repo
 # needed at runtime — see the small eudev-libs/libstdc++ runtime deps below
 # instead of this whole toolchain.
 FROM base AS deps
-RUN apk add --no-cache openssl python3 make g++ linux-headers eudev-dev libusb-dev pkgconfig
+RUN apk update && apk add --no-cache openssl python3 make g++ linux-headers eudev-dev libusb-dev pkgconfig
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY apps/backend/package.json apps/backend/package.json
 COPY apps/web/package.json apps/web/package.json
@@ -78,7 +78,7 @@ FROM node:22-alpine AS runtime
 # module (apps/backend/src/backup/) — version-pinned to match the
 # postgres:16-alpine server in docker-compose.yml, since pg_dump's custom
 # format is not guaranteed compatible across major versions.
-RUN apk add --no-cache openssl eudev-libs libstdc++ postgresql16-client
+RUN apk update && apk add --no-cache openssl eudev-libs libstdc++ postgresql16-client
 RUN mkdir -p /usr/local/lib/docker/cli-plugins
 COPY --from=dockercli /usr/local/bin/docker /usr/local/bin/docker
 COPY --from=compose-fetch /docker-compose /usr/local/lib/docker/cli-plugins/docker-compose

@@ -1,3 +1,4 @@
+
 databases:
   - name: swamiverse-db
     databaseName: swamiverse_restaurant
@@ -31,7 +32,7 @@ services:
 
   # 2. Swamiverse Web (Next.js App Router)
   - type: web
-    name: swamiverse-web
+    name: swamiverseweb
     runtime: docker
     dockerfilePath: ./apps/web/Dockerfile
     dockerContext: .
