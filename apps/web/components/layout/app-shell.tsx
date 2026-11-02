@@ -27,17 +27,24 @@ function RestaurantBrand() {
   const { data } = useSettings(branchId);
   const restaurant = data?.restaurant;
 
-  if (restaurant?.logoUrl) {
+  // Filter out any legacy nodedr logo string that might have been stored in the database
+  const validLogoUrl =
+    restaurant?.logoUrl &&
+    !restaurant.logoUrl.toLowerCase().includes("nodedr")
+      ? restaurant.logoUrl
+      : null;
+
+  if (validLogoUrl) {
     return (
       <>
         {/* eslint-disable-next-line @next/next/no-img-element -- uploaded asset served from the backend, not a Next-optimizable remote source */}
         <img
-          src={restaurant.logoUrl}
-          alt={restaurant.name}
+          src={validLogoUrl}
+          alt={restaurant?.name ?? "Restaurant"}
           className="h-8 w-8 shrink-0 rounded-lg object-contain"
         />
         <span className="truncate text-sm font-semibold tracking-tight text-sidebar-foreground">
-          {restaurant.name}
+          {restaurant?.name ?? "Swamiverse Restaurant"}
         </span>
       </>
     );
@@ -45,9 +52,9 @@ function RestaurantBrand() {
 
   return (
     <>
-      <Logo />
+      <Logo size={32} />
       <span className="truncate text-sm font-semibold tracking-tight text-sidebar-foreground">
-        {restaurant?.name ?? "Swamiverse"}
+        {restaurant?.name ?? "Swamiverse Restaurant"}
       </span>
     </>
   );

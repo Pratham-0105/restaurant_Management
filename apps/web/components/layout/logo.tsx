@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 export function Logo({ className, size = 32 }: { className?: string; size?: number }) {
   return (
     <Image
-      src="/logo.svg"
+      src="/swamiverse-logo.png"
       alt="Swamiverse"
       width={size}
       height={size}

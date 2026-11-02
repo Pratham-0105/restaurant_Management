@@ -60,6 +60,15 @@ export class AuthService implements OnModuleInit {
         include: { roles: true },
       });
       if (firstRestaurant) {
+        if (
+          firstRestaurant.logoUrl &&
+          firstRestaurant.logoUrl.toLowerCase().includes('nodedr')
+        ) {
+          await this.prisma.restaurant.update({
+            where: { id: firstRestaurant.id },
+            data: { logoUrl: null },
+          });
+        }
         const ownerRole =
           firstRestaurant.roles.find((r) => r.name === 'OWNER') ||
           firstRestaurant.roles[0];

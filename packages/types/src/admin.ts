@@ -33,3 +33,4 @@ export interface AdminStats {
   activeSubscriptions: number;
   totalOrders: number;
 }
+

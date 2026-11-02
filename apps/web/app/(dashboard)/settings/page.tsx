@@ -173,7 +173,11 @@ function GeneralSettingsForm({
 }) {
   const [name, setName] = useState(restaurant.name);
   const [legalName, setLegalName] = useState(restaurant.legalName ?? "");
-  const [logoUrl, setLogoUrl] = useState<string | null>(restaurant.logoUrl);
+  const [logoUrl, setLogoUrl] = useState<string | null>(
+    restaurant.logoUrl && !restaurant.logoUrl.toLowerCase().includes("nodedr")
+      ? restaurant.logoUrl
+      : null,
+  );
   const [currency, setCurrency] = useState(restaurant.currency);
   const [timezone, setTimezone] = useState(restaurant.timezone);
   const [upiVpa, setUpiVpa] = useState(restaurant.upiVpa ?? "");
