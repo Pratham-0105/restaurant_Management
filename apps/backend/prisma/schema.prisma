@@ -65,6 +65,11 @@ model Restaurant {
   loyaltyPointValue      Decimal @default(1) @db.Decimal(6, 2)
   loyaltyEarnPerCurrency Int     @default(100)
 
+  // Subscription management (Admin controlled)
+  subscriptionPlan      String    @default("PRO")
+  subscriptionStatus    String    @default("ACTIVE")
+  subscriptionExpiresAt DateTime?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

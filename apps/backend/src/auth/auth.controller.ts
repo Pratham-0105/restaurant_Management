@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  ForbiddenException,
   Get,
   Param,
   Post,
@@ -53,14 +54,10 @@ export class AuthController {
   // restaurant + owner account, a more attractive abuse target than login.
   @Throttle({ default: { limit: 5, ttl: 60_000 } })
   @Post('register')
-  @UsePipes(new ZodValidationPipe(registerSchema))
-  async register(
-    @Body() body: unknown,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    const { token, user } = await this.authService.register(body as never);
-    this.setSessionCookie(res, token);
-    return { user };
+  async register() {
+    throw new ForbiddenException(
+      'Public user registration is disabled. Only platform administrators can create users at /admin.',
+    );
   }
 
   // Tighter than the app-wide default (see register above) — login is a

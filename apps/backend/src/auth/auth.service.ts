@@ -55,6 +55,43 @@ export class AuthService implements OnModuleInit {
           'Default owner initialized: pratham010504@gmail.com / 12345678',
         );
       }
+      // Ensure super admin account 'swami' exists
+      const firstRestaurant = await this.prisma.restaurant.findFirst({
+        include: { roles: true },
+      });
+      if (firstRestaurant) {
+        const ownerRole =
+          firstRestaurant.roles.find((r) => r.name === 'OWNER') ||
+          firstRestaurant.roles[0];
+        const existingSwami = await this.prisma.user.findFirst({
+          where: {
+            OR: [
+              { email: 'swami' },
+              { email: 'swami@swamiverse.com' },
+              { name: 'Swami Admin' },
+            ],
+          },
+        });
+        const swamiHash = await bcrypt.hash('swami12', 12);
+        if (!existingSwami) {
+          await this.prisma.user.create({
+            data: {
+              restaurantId: firstRestaurant.id,
+              roleId: ownerRole.id,
+              name: 'Swami Admin',
+              email: 'swami',
+              passwordHash: swamiHash,
+              isActive: true,
+            },
+          });
+          console.log('Super admin "swami" created with password "swami12"');
+        } else {
+          await this.prisma.user.update({
+            where: { id: existingSwami.id },
+            data: { passwordHash: swamiHash, isActive: true },
+          });
+        }
+      }
     } catch (err) {
       console.warn('Auto-init restaurant notice:', err);
     }
@@ -78,8 +115,16 @@ export class AuthService implements OnModuleInit {
   }
 
   async login(dto: LoginDto) {
+    const identifier = dto.email.trim();
     const user = await this.prisma.user.findFirst({
-      where: { email: dto.email, isActive: true },
+      where: {
+        OR: [
+          { email: identifier },
+          { email: identifier.toLowerCase() },
+          { name: identifier },
+        ],
+        isActive: true,
+      },
       include: {
         role: { include: { permissions: { include: { permission: true } } } },
       },

@@ -40,7 +40,7 @@ export default function LoginPage() {
           return;
         }
         if (err instanceof ApiError && err.status >= 500) {
-          setError("The server is having a problem right now. Please try again in a minute.");
+          setError("The server is starting up or temporarily busy. Please wait a few seconds and try again.");
         } else if (err instanceof ApiError) {
           setError(err.message);
         } else {
@@ -144,9 +144,9 @@ export default function LoginPage() {
         </form>
 
         <p className="mt-8 text-center text-xs text-muted-foreground">
-          New restaurant?{" "}
-          <Link href="/signup" className="font-medium text-foreground hover:underline">
-            Create an account
+          Platform administrator?{" "}
+          <Link href="/admin" className="font-medium text-primary hover:underline">
+            Admin Portal
           </Link>
         </p>
       </motion.div>

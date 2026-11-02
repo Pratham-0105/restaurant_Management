@@ -72,8 +72,8 @@ export function Hero() {
               <ArrowRight className="ml-1 size-4" data-icon="inline-end" />
             </Button>
           ) : (
-            <Button size="lg" className="h-11 px-6 text-[15px]" render={<Link href="/signup" />}>
-              Get started free
+            <Button size="lg" className="h-11 px-6 text-[15px]" render={<Link href="/login" />}>
+              Sign in to Dashboard
               <ArrowRight className="size-4" data-icon="inline-end" />
             </Button>
           )}

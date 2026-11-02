@@ -64,11 +64,11 @@ export function MarketingNav() {
             </>
           ) : (
             <>
-              <Button variant="ghost" size="default" render={<Link href="/login" />}>
-                Sign in
+              <Button variant="ghost" size="default" render={<Link href="/admin" />}>
+                Admin
               </Button>
-              <Button variant="default" size="default" render={<Link href="/signup" />}>
-                Get started free
+              <Button variant="default" size="default" render={<Link href="/login" />}>
+                Sign in
               </Button>
             </>
           )}
@@ -112,11 +112,11 @@ export function MarketingNav() {
                 </>
               ) : (
                 <>
-                  <Button variant="outline" render={<Link href="/login" />}>
-                    Sign in
+                  <Button variant="outline" render={<Link href="/admin" />}>
+                    Admin Portal
                   </Button>
-                  <Button variant="default" render={<Link href="/signup" />}>
-                    Get started free
+                  <Button variant="default" render={<Link href="/login" />}>
+                    Sign in
                   </Button>
                 </>
               )}
